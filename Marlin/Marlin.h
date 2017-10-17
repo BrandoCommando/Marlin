@@ -122,6 +122,7 @@ FORCE_INLINE void serialprintPGM(const char* str) {
   }
 }
 
+void check_sticks();
 void idle(
   #if ENABLED(FILAMENTCHANGEENABLE)
     bool no_stepper_sleep=false  // pass true to keep steppers from disabling on timeout

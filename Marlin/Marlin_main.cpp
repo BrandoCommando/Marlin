@@ -506,14 +506,14 @@ void serial_echopair_P(const char* s_P, unsigned long v) { serialprintPGM(s_P); 
 
 void gcode_M114();
 
+void print_xyz(const char* prefix, const float x, const float y, const float z) {
+  SERIAL_ECHO(prefix);
+  SERIAL_ECHOPAIR(": (", x);
+  SERIAL_ECHOPAIR(", ", y);
+  SERIAL_ECHOPAIR(", ", z);
+  SERIAL_ECHOLNPGM(")");
+}
 #if ENABLED(DEBUG_LEVELING_FEATURE)
-  void print_xyz(const char* prefix, const float x, const float y, const float z) {
-    SERIAL_ECHO(prefix);
-    SERIAL_ECHOPAIR(": (", x);
-    SERIAL_ECHOPAIR(", ", y);
-    SERIAL_ECHOPAIR(", ", z);
-    SERIAL_ECHOLNPGM(")");
-  }
   void print_xyz(const char* prefix, const float xyz[]) {
     print_xyz(prefix, xyz[X_AXIS], xyz[Y_AXIS], xyz[Z_AXIS]);
   }
@@ -843,6 +843,10 @@ void setup() {
     pinMode(SLED_PIN, OUTPUT);
     digitalWrite(SLED_PIN, LOW); // turn it off
   #endif // Z_PROBE_SLED
+
+  #if ENABLED(BRANDOSTICK)
+    pinMode(STICK_ENABLE_PIN, INPUT);
+  #endif
 
   setup_homepin();
 
@@ -7747,8 +7751,40 @@ void idle(
       no_stepper_sleep
     #endif
   );
+  check_sticks();
   host_keepalive();
   lcd_update();
+}
+
+void check_sticks()
+{
+  #if defined(BRANDOSTICK)
+  if(digitalRead(STICK_ENABLE_PIN) == HIGH)
+  {
+    float x = map(analogRead(STICK_X_PIN), 0, 1120, -50, 50) / 10.0;
+    float y = map(analogRead(STICK_Y_PIN), 0, 1120, -50, 50) / 10.0;
+    #if defined(STICK_Z_PIN)
+    float z = map(analogRead(STICK_Z_PIN), 0, 1120, -50, 50) / 10.0;
+    #else
+    float z = 0;
+    #endif
+    if(abs(x)<1&&abs(y)<1&&abs(z)<1) return;
+    print_xyz("Stick Pos",x,y,z);
+    /*
+    float oldFeedRate = feedrate;
+    if(x != 0)
+      destination[0] = current_position[0] + x;
+    if(y != 0)
+      destination[1] = current_position[1] + y;
+    if(z != 0)
+      destination[2] = current_position[2] + z;
+    feedrate = max_feedrate[0];
+    prepare_move();
+    st_synchronize();
+    feedrate = oldFeedRate;
+    */
+  }
+  #endif
 }
 
 /**

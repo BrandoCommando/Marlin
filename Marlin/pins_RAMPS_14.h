@@ -73,15 +73,15 @@
 #define Y_MIN_PIN          14
 #define Y_MAX_PIN          15
 
-#define Z_STEP_PIN         46
-#define Z_DIR_PIN          48
-#define Z_ENABLE_PIN       62
+#define Z_STEP_PIN         26 //46
+#define Z_DIR_PIN          28 //48
+#define Z_ENABLE_PIN       24 //62
 #define Z_MIN_PIN          18
 #define Z_MAX_PIN          19
 
-#define E0_STEP_PIN        26
-#define E0_DIR_PIN         28
-#define E0_ENABLE_PIN      24
+#define E0_STEP_PIN        46 //26
+#define E0_DIR_PIN         48 //28
+#define E0_ENABLE_PIN      62 //24
 
 #define E1_STEP_PIN        36
 #define E1_DIR_PIN         34
@@ -151,6 +151,12 @@
   #define SLED_PIN           -1
 #endif
 
+#if defined(BRANDOSTICK)
+	#define STICK_X_PIN 49
+	#define STICK_Y_PIN 51
+	#define STICK_ENABLE_PIN 53
+#endif
+
 #if ENABLED(ULTRA_LCD)
 
   #if ENABLED(NEWPANEL)
@@ -178,6 +184,11 @@
       #define BTN_ENC 35
 
       #define SD_DETECT_PIN 49
+	#elif ENABLED(BRANDOPANEL)
+	  #define BEEPER_PIN 33
+	  #define BTN_ENC 35
+	  #define BTN_EN1 37
+	  #define BTN_EN2 39
     #elif ENABLED(LCD_I2C_PANELOLU2)
       #define BTN_EN1 47  // reverse if the encoder turns the wrong way.
       #define BTN_EN2 43
