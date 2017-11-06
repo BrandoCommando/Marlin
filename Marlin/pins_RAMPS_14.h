@@ -152,12 +152,15 @@
 #endif
 
 #if defined(BRANDOSTICK)
-	#define STICK_X_PIN 49
-	#define STICK_Y_PIN 51
-	#define STICK_ENABLE_PIN 53
+	#define STICK_X_PIN A3
+	#define STICK_Y_PIN A4
+	#define STICK_ENABLE_PIN 1
 #endif
 
 #if ENABLED(ULTRA_LCD)
+
+#define I2C_SCL            20
+#define I2C_SDA            21
 
   #if ENABLED(NEWPANEL)
     #if ENABLED(PANEL_ONE)

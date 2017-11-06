@@ -57,6 +57,10 @@ typedef unsigned long millis_t;
   #define analogInputToDigitalPin(p) ((p) + 0xA0)
 #endif
 
+#ifdef BRANDOSTICK
+#include <ResponsiveAnalogRead.h>
+#endif
+
 #ifdef USBCON
   #include "HardwareSerial.h"
 #endif

@@ -257,6 +257,12 @@
   TWIBus i2c;
 #endif
 
+#if ENABLED(BRANDOSTICK)
+// ResponsiveAnalogRead stick1(STICK_X_PIN, true, 0.1);
+// ResponsiveAnalogRead stick2(STICK_Y_PIN, true, 0.1);
+unsigned long lastStickRead = 0;
+#endif
+
 bool Running = true;
 
 uint8_t marlin_debug_flags = DEBUG_NONE;
@@ -845,7 +851,9 @@ void setup() {
   #endif // Z_PROBE_SLED
 
   #if ENABLED(BRANDOSTICK)
-    pinMode(STICK_ENABLE_PIN, INPUT);
+    pinMode(STICK_X_PIN, INPUT);
+    pinMode(STICK_Y_PIN, INPUT);
+    pinMode(STICK_ENABLE_PIN, INPUT_PULLUP);
   #endif
 
   setup_homepin();
@@ -7759,17 +7767,49 @@ void idle(
 void check_sticks()
 {
   #if defined(BRANDOSTICK)
-  if(digitalRead(STICK_ENABLE_PIN) == HIGH)
+//   stick1.update();
+//   stick2.update();
+  if(digitalRead(STICK_ENABLE_PIN) == LOW)
   {
-    float x = map(analogRead(STICK_X_PIN), 0, 1120, -50, 50) / 10.0;
-    float y = map(analogRead(STICK_Y_PIN), 0, 1120, -50, 50) / 10.0;
+  	analogRead(STICK_X_PIN);
+  	analogRead(STICK_Y_PIN);
+//     float x = map(stick1.getValue(), 0, 1023, 50, -50) / 10.0;
+	float x = map(analogRead(STICK_X_PIN), 0, 1120, 50, -50) / 10.0;
+    if(abs(x)>=5.0) x = 0.0;
+//     float y = map(stick2.getValue(), 0, 1023, 50, -50) / 10.0;
+    float y = map(analogRead(STICK_Y_PIN), 0, 1120, 50, -50) / 10.0;
+    if(abs(y)>=5.0) y = 0.0;
     #if defined(STICK_Z_PIN)
     float z = map(analogRead(STICK_Z_PIN), 0, 1120, -50, 50) / 10.0;
     #else
     float z = 0;
     #endif
-    if(abs(x)<1&&abs(y)<1&&abs(z)<1) return;
+    if(abs(x)==0.0&&abs(y)==0.0&&abs(z)==0.0) return;
+    unsigned long now = millis();
+    if(now - lastStickRead < 100) return;
+    lastStickRead = now;
+    
     print_xyz("Stick Pos",x,y,z);
+    //*
+    enqueue_and_echo_command("G91",true);
+    String cmd = "G1";
+    if(abs(x) > 0) {
+    	cmd += " X";
+	    cmd += x;
+	}
+	if(abs(y) > 0) {
+		cmd += " Y";
+		cmd += y;
+	}
+	if(abs(z) > 0) {
+		cmd += " Z";
+		cmd += z;
+	}
+	cmd += " F8000";
+// 	cmd += max_feedrate[0];
+    enqueue_and_echo_command(cmd.c_str(),true);
+    enqueue_and_echo_command("G90",true);
+    //*/
     /*
     float oldFeedRate = feedrate;
     if(x != 0)
