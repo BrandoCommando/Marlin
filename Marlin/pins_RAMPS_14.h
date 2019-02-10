@@ -59,9 +59,9 @@
 #define SERVO2_PIN          5
 #define SERVO3_PIN          4
 
-#define X_STEP_PIN         54
-#define X_DIR_PIN          55
-#define X_ENABLE_PIN       38
+#define X_STEP_PIN         54 // 46
+#define X_DIR_PIN          55 // 48
+#define X_ENABLE_PIN       38 // 62
 #define X_MIN_PIN           3
 #ifndef X_MAX_PIN
   #define X_MAX_PIN         2
@@ -73,19 +73,23 @@
 #define Y_MIN_PIN          14
 #define Y_MAX_PIN          15
 
-#define Z_STEP_PIN         26 //46
-#define Z_DIR_PIN          28 //48
-#define Z_ENABLE_PIN       24 //62
+#define Z_STEP_PIN         46 // 26 //46
+#define Z_DIR_PIN          48 // 28 //48
+#define Z_ENABLE_PIN       62 // 24 //62
 #define Z_MIN_PIN          18
 #define Z_MAX_PIN          19
 
-#define E0_STEP_PIN        46 //26
-#define E0_DIR_PIN         48 //28
-#define E0_ENABLE_PIN      62 //24
+#define E0_STEP_PIN        26
+#define E0_DIR_PIN         28
+#define E0_ENABLE_PIN      24
 
 #define E1_STEP_PIN        36
 #define E1_DIR_PIN         34
 #define E1_ENABLE_PIN      30
+
+#define Y2_STEP_PIN        36
+#define Y2_DIR_PIN         34
+#define Y2_ENABLE_PIN      30
 
 #define SDPOWER            -1
 #define SDSS               53

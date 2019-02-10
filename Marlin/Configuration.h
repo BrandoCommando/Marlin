@@ -447,9 +447,9 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 
 // Disables axis stepper immediately when it's not being used.
 // WARNING: When motors turn off there is a chance of losing position accuracy!
-#define DISABLE_X true
-#define DISABLE_Y true
-#define DISABLE_Z true
+#define DISABLE_X false
+#define DISABLE_Y false
+#define DISABLE_Z false
 // Warn on display about possibly reduced accuracy
 #define DISABLE_REDUCED_ACCURACY_WARNING
 
@@ -461,9 +461,9 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR true
-#define INVERT_Y_DIR true
-#define INVERT_Z_DIR true
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR false
+#define INVERT_Z_DIR false
 
 // @section extruder
 
@@ -484,16 +484,16 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 
-#define min_software_endstops true // If true, axis won't move to coordinates less than HOME_POS.
-#define max_software_endstops true  // If true, axis won't move to coordinates greater than the defined lengths below.
+#define min_software_endstops false // If true, axis won't move to coordinates less than HOME_POS.
+#define max_software_endstops false  // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // @section machine
 
 // Travel limits after homing (units are in mm)
-#define X_MIN_POS 0
-#define Y_MIN_POS 0
-#define Z_MIN_POS 0
-#define X_MAX_POS 400
+#define X_MIN_POS -50
+#define Y_MIN_POS -50
+#define Z_MIN_POS -50
+#define X_MAX_POS 300
 #define Y_MAX_POS 270
 #define Z_MAX_POS 60
 
@@ -679,13 +679,13 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
  * MOVEMENT SETTINGS
  */
 
-#define HOMING_FEEDRATE {0, 0, 0, 0}  // set the homing speeds (mm/min)
+#define HOMING_FEEDRATE {500, 500, 500, 500}  // set the homing speeds (mm/min)
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,2300,80}  // default steps per unit for Ultimaker
-#define DEFAULT_MAX_FEEDRATE          {500, 500, 500, 500}    // (mm/sec)
-#define DEFAULT_MAX_ACCELERATION      {500,500,500,3000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,400,80}  // default steps per unit for Ultimaker
+#define DEFAULT_MAX_FEEDRATE          {800, 800, 200, 500}    // (mm/sec)
+#define DEFAULT_MAX_ACCELERATION      {500,500,20,3000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
 #define DEFAULT_ACCELERATION          200    // X, Y, Z and E acceleration in mm/s^2 for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration in mm/s^2 for retracts
