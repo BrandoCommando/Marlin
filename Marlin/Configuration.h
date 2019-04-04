@@ -186,7 +186,7 @@
 #define TEMP_SENSOR_1 998
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
-#define TEMP_SENSOR_BED 998
+#define TEMP_SENSOR_BED 0
 
 // This makes temp sensor 1 a redundant sensor for sensor 0. If the temperatures difference between these sensors is to high the print will be aborted.
 //#define TEMP_SENSOR_1_AS_REDUNDANT
@@ -205,10 +205,10 @@
 // The minimal temperature defines the temperature below which the heater will not be enabled It is used
 // to check that the wiring to the thermistor is not broken.
 // Otherwise this would lead to the heater being powered on all the time.
-#define HEATER_0_MINTEMP 5
-#define HEATER_1_MINTEMP 5
-#define HEATER_2_MINTEMP 5
-#define HEATER_3_MINTEMP 5
+#define HEATER_0_MINTEMP -5
+#define HEATER_1_MINTEMP -5
+#define HEATER_2_MINTEMP -5
+#define HEATER_3_MINTEMP -5
 #define BED_MINTEMP 0
 
 // When temperature exceeds max temp, your heater will be switched off.
@@ -455,7 +455,7 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 
 // @section extruder
 
-#define DISABLE_E true // For all extruders
+#define DISABLE_E false // For all extruders
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 
 // @section machine
